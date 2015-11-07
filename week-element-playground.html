@@ -1,0 +1,100 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+An element representing calendar day.
+Example:
+
+    <week-element></week-element>
+
+@group Calendar Elements
+@element week
+@demo demo/index.html
+-->
+
+<dom-module id="week-element">
+    <template>
+        <style>
+            :host {
+                display: block;
+                box-sizing: border-box;
+            }
+
+            .week {
+                width: 180px;
+                height: 420px;
+
+                border: 3px rgb(173, 233, 255) solid;
+
+                padding: 5px;
+
+                background: rgb(209, 231, 240);
+
+                color: rgb(43, 111, 119);
+                font-size: inherit;
+                font-weight: inherit;
+                font-family: 'MS Sans Serif', Geneva, sans-serif;
+                font-style: inherit;
+                text-decoration: inherit;
+                text-align: left;
+
+                line-height: 1.3em;
+                letter-spacing: 0.075em;
+            }
+
+        </style>
+        <div class="week">
+            <content></content>
+        </div>
+    </template>
+
+    <script>
+
+        var happinesLevel = function(time) {
+            // normally, this function would query some api for cloudiness at given time, location
+            return true;
+        };
+
+        Polymer({
+            is: 'week-element',
+
+            properties: {
+                time: {
+                    type: Object,
+                    value: function() {
+                        return {
+                            year: 2015,
+                            month: 11,
+                            day: 18
+                        }
+                    }
+                }
+            },
+
+            // Element Lifecycle
+
+            attached: function() {
+                // `ready` is called after all elements have been configured, but
+                // propagates bottom-up. This element's children are ready, but parents
+                // are not.
+                //
+                // This is the point where you should make modifications to the DOM (when
+                // necessary), or kick off any processes the element wants to perform.
+            },
+
+            ready: function() {
+                console.log("attached called with values");
+                console.log(this);
+                this.customStyle['color'] = 'red';//chooseColour(checkCloudy(this.time), checkSmog(this.time), this.time.hour);
+                Polymer.updateStyles();
+                console.log("attached completed");
+            },
+
+            detached: function() {
+                // The analog to `attached`, `detached` fires when the element has been
+                // removed from a document.
+                //
+                // Use this to clean up anything you did in `attached`.
+            }
+        });
+    </script>
+</dom-module>
